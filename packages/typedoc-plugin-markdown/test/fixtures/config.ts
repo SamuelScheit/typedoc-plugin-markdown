@@ -89,7 +89,7 @@ const config: Record<string, Fixture> = {
     ],
   },
   groups: {
-    only: false,
+    only: true,
     entryPoints: '/groups/**/*.ts',
     commonOptions: {
       plugin: [
@@ -291,6 +291,46 @@ const config: Record<string, Fixture> = {
           path.join(__dirname, 'custom-plugins', 'navigation-plugin.mjs'),
         ],
         theme: 'custom-theme',
+      },
+    ],
+  },
+  categories: {
+    only: true,
+    entryPoints: [
+      '/categories/module-1.ts',
+      '/categories/module-2.ts',
+      '/categories/module-3.ts',
+    ],
+    outputFileStrategies: ['categories'],
+    commonOptions: {
+      disableSources: true,
+      readme: 'none',
+      categorizeByGroup: false,
+      indexFormat: 'table',
+    },
+    options: [
+      {
+        plugin: [
+          path.join(__dirname, 'custom-plugins', 'navigation-plugin.mjs'),
+        ],
+      },
+    ],
+  },
+  categoriesSingleModule: {
+    only: true,
+    entryPoints: ['/categories/module-1.ts'],
+    outputFileStrategies: ['categories'],
+    commonOptions: {
+      disableSources: true,
+      readme: 'none',
+      categorizeByGroup: false,
+    },
+    options: [
+      {
+        indexFormat: 'list',
+        plugin: [
+          path.join(__dirname, 'custom-plugins', 'navigation-plugin.mjs'),
+        ],
       },
     ],
   },

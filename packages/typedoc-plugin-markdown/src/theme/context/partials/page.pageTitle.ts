@@ -1,7 +1,15 @@
 import { MarkdownThemeContext } from 'theme';
-import { DeclarationReflection, ReflectionKind } from 'typedoc';
+import {
+  DeclarationReflection,
+  ReflectionCategory,
+  ReflectionKind,
+} from 'typedoc';
 
 export function pageTitle(this: MarkdownThemeContext): string {
+  if (this.page.model instanceof ReflectionCategory) {
+    return this.page.model.title;
+  }
+
   const textContentMappings = this.options.getValue('textContentMappings');
   const page = this.page;
   if (page.model?.url === page.project.url) {

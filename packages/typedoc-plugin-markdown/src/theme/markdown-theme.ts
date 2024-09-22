@@ -9,6 +9,7 @@ import {
   DocumentReflection,
   ProjectReflection,
   Reflection,
+  ReflectionCategory,
   ReflectionKind,
   Renderer,
   Theme,
@@ -74,7 +75,7 @@ export class MarkdownTheme extends Theme {
    * @internal
    */
   getTemplateMapping(
-    kind: ReflectionKind,
+    reflection: DeclarationReflection | DocumentReflection,
     outputFileStrategy?: OutputFileStrategy,
   ) {
     outputFileStrategy =
@@ -90,6 +91,17 @@ export class MarkdownTheme extends Theme {
 
     const membersWithOwnFile =
       this.application.options.getValue('membersWithOwnFile');
+
+    if (
+      outputFileStrategy === OutputFileStrategy.Categories &&
+      reflection instanceof ReflectionCategory
+    ) {
+      return {
+        template: this.categoryTemplate,
+        directory: null,
+        kind: null,
+      };
+    }
 
     const memberMapping = (
       template: (pageEvent: MarkdownPageEvent<any>) => string,
@@ -191,7 +203,7 @@ export class MarkdownTheme extends Theme {
       );
     }
 
-    return mappings[kind];
+    return mappings[reflection.kind];
   }
 
   /**
@@ -220,5 +232,12 @@ export class MarkdownTheme extends Theme {
    */
   reflectionTemplate = (page: MarkdownPageEvent<DeclarationReflection>) => {
     return this.getRenderContext(page).templates.reflection(page);
+  };
+
+  /**
+   * @internal
+   */
+  categoryTemplate = (page: MarkdownPageEvent<Reflection>) => {
+    return this.getRenderContext(page).templates.category(page);
   };
 }

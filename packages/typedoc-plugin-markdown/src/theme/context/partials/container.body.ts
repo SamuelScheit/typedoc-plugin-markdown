@@ -1,3 +1,5 @@
+import { heading } from '@plugin/libs/markdown';
+import { OutputFileStrategy } from '@plugin/options/maps';
 import { MarkdownThemeContext } from 'theme';
 import {
   ContainerReflection,
@@ -13,11 +15,21 @@ export function body(
   const md: string[] = [];
 
   if (model.categories?.length) {
-    md.push(
-      this.partials.categories(model.categories, {
-        headingLevel: options.headingLevel,
-      }),
-    );
+    if (
+      this.options.getValue('outputFileStrategy') ===
+      OutputFileStrategy.Categories
+    ) {
+      md.push(
+        heading(options.headingLevel, this.i18n.theme_categories()) + '\n',
+      );
+      md.push(this.partials.categoryIndex(model.categories));
+    } else {
+      md.push(
+        this.partials.categories(model.categories, {
+          headingLevel: options.headingLevel,
+        }),
+      );
+    }
   } else {
     const containerKinds = [
       ReflectionKind.Project,

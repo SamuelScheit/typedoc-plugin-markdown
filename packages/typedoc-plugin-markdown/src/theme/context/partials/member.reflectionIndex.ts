@@ -1,3 +1,4 @@
+import { OutputFileStrategy } from '@plugin/options/maps';
 import { heading } from 'libs/markdown';
 import { MarkdownThemeContext } from 'theme';
 import {
@@ -14,13 +15,20 @@ export function reflectionIndex(
   const md: string[] = [];
 
   if (model.categories) {
-    model.categories.forEach((categoryGroup) => {
-      md.push(heading(options.headingLevel, categoryGroup.title) + '\n');
-      if (categoryGroup.description) {
-        md.push(this.helpers.getCommentParts(categoryGroup.description) + '\n');
-      }
-      md.push(this.helpers.getGroupIndex(categoryGroup) + '\n');
-    });
+    if (
+      this.options.getValue('outputFileStrategy') !==
+      OutputFileStrategy.Categories
+    ) {
+      model.categories.forEach((categoryGroup) => {
+        md.push(heading(options.headingLevel, categoryGroup.title) + '\n');
+        if (categoryGroup.description) {
+          md.push(
+            this.helpers.getCommentParts(categoryGroup.description) + '\n',
+          );
+        }
+        md.push(this.partials.groupIndex(categoryGroup) + '\n');
+      });
+    }
   } else {
     const groups = model.groups?.filter(
       (group) =>
@@ -39,11 +47,11 @@ export function reflectionIndex(
               this.helpers.getCommentParts(categoryGroup.description) + '\n',
             );
           }
-          md.push(this.helpers.getGroupIndex(categoryGroup) + '\n');
+          md.push(this.partials.groupIndex(categoryGroup) + '\n');
         });
       } else {
         md.push(heading(options.headingLevel, reflectionGroup.title) + '\n');
-        md.push(this.helpers.getGroupIndex(reflectionGroup) + '\n');
+        md.push(this.partials.groupIndex(reflectionGroup) + '\n');
       }
     });
   }
