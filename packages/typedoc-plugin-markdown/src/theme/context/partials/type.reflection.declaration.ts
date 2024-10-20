@@ -1,4 +1,3 @@
-import { backTicks } from 'libs/markdown';
 import { MarkdownThemeContext } from 'theme';
 import { DeclarationReflection, SomeType } from 'typedoc';
 
@@ -39,13 +38,13 @@ export function declarationType(
           }
         }
 
-        name.push(backTicks(obj.name));
+        name.push(obj.name);
 
         const theType = this.helpers.getDeclarationType(obj) as SomeType;
 
         const typeString =
           obj.defaultValue && obj.defaultValue !== '...'
-            ? backTicks(obj.defaultValue)
+            ? obj.defaultValue
             : this.partials.someType(theType);
 
         if (shouldFormat) {

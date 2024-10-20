@@ -35,7 +35,7 @@ import {
   UnionType,
   UnknownType,
 } from 'typedoc';
-import { templates, partials, helpers } from './index';
+import { helpers, partials, templates } from './index';
 
 export const resourceTemplates = (context: MarkdownThemeContext) => {
   return {
@@ -129,8 +129,8 @@ export const resourcePartials = (context: MarkdownThemeContext) => {
       model: DeclarationReflection | SignatureReflection,
       options: { headingLevel: number },
     ) => partials.inheritance.apply(context, [model, options]) as string,
-    memberTitle: (model: DeclarationReflection) =>
-      partials.memberTitle.apply(context, [model]) as string,
+    memberTitle: (model: DeclarationReflection, includeType = false) =>
+      partials.memberTitle.apply(context, [model, includeType]) as string,
     /**
      * Renders a top-level member that contains group and child members such as Classes, Interfaces and Enums.
      */

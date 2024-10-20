@@ -17,8 +17,7 @@
     "test-all": "npm run test --workspaces --if-present",
     "lint-all": "npm run lint --workspaces --if-present",
     "prerelease": "npm run build-all",
-    "release": "npx changeset publish",
-    "prepare": "husky"
+    "release": "npx changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.7",

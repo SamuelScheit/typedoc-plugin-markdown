@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 import { heading, unorderedList } from 'libs/markdown';
 import { MarkdownThemeContext } from 'theme';
 import { DeclarationReflection, ReflectionKind } from 'typedoc';
@@ -28,22 +30,6 @@ export function memberWithGroups(
     );
   }
 
-  if (model.typeParameters?.length) {
-    md.push(
-      heading(
-        options.headingLevel,
-        this.internationalization.kindPluralString(
-          ReflectionKind.TypeParameter,
-        ),
-      ),
-    );
-    if (this.helpers.useTableFormat('parameters')) {
-      md.push(this.partials.typeParametersTable(model.typeParameters));
-    } else {
-      md.push(this.partials.typeParametersList(model.typeParameters));
-    }
-  }
-
   if (model.implementedTypes?.length) {
     md.push(heading(options.headingLevel, this.i18n.theme_implements()));
     md.push(
@@ -72,23 +58,6 @@ export function memberWithGroups(
       });
   }
 
-  if ('signatures' in model && model.signatures?.length) {
-    model.signatures.forEach((signature) => {
-      md.push(
-        this.partials.signature(signature, {
-          headingLevel: options.headingLevel,
-        }),
-      );
-    });
-  }
-
-  if (model.indexSignatures?.length) {
-    md.push(heading(options.headingLevel, this.i18n.theme_indexable()));
-    model.indexSignatures.forEach((indexSignature) => {
-      md.push(this.partials.indexSignature(indexSignature));
-    });
-  }
-
   if (
     model.documents ||
     model?.groups?.some((group) => group.allChildrenHaveOwnDocument())
@@ -111,7 +80,7 @@ export function memberWithGroups(
     md.push(
       this.partials.reflectionIndex(model, {
         headingLevel: isAbsoluteIndex
-          ? options.headingLevel + 1
+          ? options.headingLevel
           : options.headingLevel,
       }),
     );

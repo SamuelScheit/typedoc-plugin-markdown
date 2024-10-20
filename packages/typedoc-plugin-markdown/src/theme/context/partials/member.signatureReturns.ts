@@ -49,7 +49,7 @@ export function signatureReturns(
     typeDeclaration.signatures.forEach((signature) => {
       md.push(
         this.partials.signature(signature, {
-          headingLevel: options.headingLevel + 1,
+          headingLevel: options.headingLevel,
           nested: true,
         }),
       );

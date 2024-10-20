@@ -1,4 +1,3 @@
-import { backTicks } from '@plugin/libs/markdown';
 import { MarkdownThemeContext } from '@plugin/theme';
 import { SignatureReflection, SomeType } from 'typedoc';
 
@@ -8,11 +7,6 @@ export function functionType(
   options?: { forceParameterType: boolean },
 ): string {
   const functions = model.map((fn) => {
-    const typeParams = fn.typeParameters
-      ? `${this.helpers.getAngleBracket('<')}${fn.typeParameters
-          .map((typeParameter) => backTicks(typeParameter.name))
-          .join(', ')}${this.helpers.getAngleBracket('>')}`
-      : [];
     const showParameterType =
       options?.forceParameterType || this.options.getValue('expandParameters');
 
@@ -20,7 +14,7 @@ export function functionType(
       ? fn.parameters.map((param) => {
           const paramType = this.partials.someType(param.type as SomeType);
           const paramItem = [
-            `${param.flags.isRest ? '...' : ''}${backTicks(param.name)}${
+            `${param.flags.isRest ? '...' : ''}${param.name}${
               param.flags.isOptional ? '?' : ''
             }`,
           ];
@@ -31,7 +25,7 @@ export function functionType(
         })
       : [];
     const returns = this.partials.someType(fn.type as SomeType);
-    return typeParams + `(${params.join(', ')}) => ${returns}`;
+    return `(${params.join(', ')}) => ${returns}`;
   });
   return functions.join('');
 }

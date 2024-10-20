@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 import { heading } from 'libs/markdown';
 import { MarkdownThemeContext } from 'theme';
 import {
   DeclarationReflection,
   IntersectionType,
   ReferenceType,
-  ReflectionKind,
   ReflectionType,
 } from 'typedoc';
 
@@ -25,8 +26,6 @@ export function declaration(
     nested: false,
     ...options,
   };
-
-  md.push(this.partials.declarationTitle(model));
 
   if (model?.documents) {
     md.push(
@@ -57,10 +56,6 @@ export function declaration(
       ) {
         if (intersectionType.declaration.children) {
           md.push(
-            heading(opts.headingLevel, this.i18n.theme_type_declaration()),
-          );
-
-          md.push(
             this.partials.typeDeclaration(intersectionType.declaration, {
               headingLevel: opts.headingLevel,
             }),
@@ -73,7 +68,7 @@ export function declaration(
   if (model.type instanceof ReferenceType && model.type.typeArguments?.length) {
     if (model.type.typeArguments[0] instanceof ReflectionType) {
       if (model.type.typeArguments[0].declaration?.children) {
-        md.push(heading(opts.headingLevel, this.i18n.theme_type_declaration()));
+        // md.push(heading(opts.headingLevel, this.i18n.theme_type_declaration()));
         md.push(
           this.partials.typeDeclaration(
             model.type.typeArguments[0].declaration,
@@ -81,22 +76,6 @@ export function declaration(
           ),
         );
       }
-    }
-  }
-
-  if (model.typeParameters) {
-    md.push(
-      heading(
-        opts.headingLevel,
-        this.internationalization.kindPluralString(
-          ReflectionKind.TypeParameter,
-        ),
-      ),
-    );
-    if (this.helpers.useTableFormat('parameters')) {
-      md.push(this.partials.typeParametersTable(model.typeParameters));
-    } else {
-      md.push(this.partials.typeParametersList(model.typeParameters));
     }
   }
 
@@ -120,26 +99,14 @@ export function declaration(
     }
 
     if (typeDeclaration?.children?.length) {
-      const useHeading =
-        model.kind !== ReflectionKind.Property ||
-        this.helpers.useTableFormat('properties');
       if (!opts.nested && typeDeclaration?.children?.length) {
-        if (useHeading) {
-          md.push(
-            heading(opts.headingLevel, this.i18n.theme_type_declaration()),
-          );
-        }
-
         if (typeDeclaration.categories) {
           typeDeclaration.categories.forEach((category) => {
-            md.push(heading(opts.headingLevel, category.title));
             md.push(
               this.partials.typeDeclaration(
                 category as unknown as DeclarationReflection,
                 {
-                  headingLevel: useHeading
-                    ? opts.headingLevel + 1
-                    : opts.headingLevel,
+                  headingLevel: opts.headingLevel,
                 },
               ),
             );
@@ -147,9 +114,7 @@ export function declaration(
         } else {
           md.push(
             this.partials.typeDeclaration(typeDeclaration, {
-              headingLevel: useHeading
-                ? opts.headingLevel
-                : opts.headingLevel - 1,
+              headingLevel: opts.headingLevel,
             }),
           );
         }

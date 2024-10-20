@@ -80,7 +80,7 @@ export function declarationTitle(
   md.push(name.join(''));
 
   if (declarationType) {
-    md.push(this.partials.someType(declarationType));
+    md.push(backTicks(this.partials.someType(declarationType)));
   }
 
   if (

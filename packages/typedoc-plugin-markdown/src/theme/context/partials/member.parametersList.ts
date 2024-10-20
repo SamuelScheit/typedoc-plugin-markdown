@@ -56,7 +56,7 @@ export function parametersList(
     const identifier: string[] = [bold(name)];
 
     if (parameter.type && !(parameter.type instanceof ReflectionType)) {
-      identifier.push(': ' + this.partials.someType(parameter.type));
+      identifier.push(': ' + backTicks(this.partials.someType(parameter.type)));
     }
 
     if (parameter.defaultValue) {

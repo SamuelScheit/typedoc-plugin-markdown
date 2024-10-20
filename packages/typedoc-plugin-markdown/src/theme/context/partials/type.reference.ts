@@ -1,4 +1,4 @@
-import { backTicks, link } from 'libs/markdown';
+import { link } from 'libs/markdown';
 import { MarkdownThemeContext } from 'theme';
 import { ReferenceType } from 'typedoc';
 
@@ -9,26 +9,18 @@ export function referenceType(
   if (model.reflection || (model.name && model.typeArguments)) {
     const reflection: string[] = [];
 
-    if (model.reflection?.url) {
-      reflection.push(
-        link(
-          backTicks(model.reflection.name),
-          this.getRelativeUrl(model.reflection.url),
-        ),
-      );
-    } else {
-      reflection.push(
-        model.externalUrl
-          ? link(backTicks(model.name), model.externalUrl)
-          : backTicks(model.name),
-      );
-    }
+    let base = model.reflection?.name || model.name;
+
     if (model.typeArguments && model.typeArguments.length) {
-      reflection.push(this.partials.typeArguments(model.typeArguments));
+      base += this.partials.typeArguments(model.typeArguments);
+    }
+
+    if (model.reflection?.url) {
+      reflection.push(link(base, this.getRelativeUrl(model.reflection.url)));
+    } else {
+      reflection.push(model.externalUrl ? link(base, model.externalUrl) : base);
     }
     return reflection.join('');
   }
-  return model.externalUrl
-    ? link(backTicks(model.name), model.externalUrl)
-    : backTicks(model.name);
+  return model.externalUrl ? link(model.name, model.externalUrl) : model.name;
 }

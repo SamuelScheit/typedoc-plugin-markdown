@@ -1,4 +1,3 @@
-import { backTicks } from 'libs/markdown';
 import { MarkdownThemeContext } from 'theme';
 import { ReflectionType } from 'typedoc';
 
@@ -16,7 +15,5 @@ export function reflectionType(
     !options?.forceCollapse &&
     (this.options.getValue('expandObjects') as boolean);
 
-  return expandObjects
-    ? this.partials.declarationType(root)
-    : backTicks('object');
+  return expandObjects ? this.partials.declarationType(root) : 'object';
 }

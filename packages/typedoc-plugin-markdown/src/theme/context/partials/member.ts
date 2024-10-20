@@ -18,7 +18,7 @@ export function member(
     ].includes(model.kind)
   ) {
     return this.partials.memberWithGroups(model, {
-      headingLevel: options.headingLevel + 1,
+      headingLevel: options.headingLevel + 0,
     });
   }
 
@@ -30,7 +30,7 @@ export function member(
 
   if (model.kind === ReflectionKind.Accessor) {
     return this.partials.accessor(model, {
-      headingLevel: options.headingLevel + 1,
+      headingLevel: options.headingLevel + 0,
     });
   }
 
@@ -46,7 +46,7 @@ export function member(
   }
 
   return this.partials.declaration(model, {
-    headingLevel: options.headingLevel + 1,
+    headingLevel: options.headingLevel,
     nested: options.nested,
   });
 }

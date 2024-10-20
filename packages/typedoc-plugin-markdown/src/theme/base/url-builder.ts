@@ -579,11 +579,11 @@ export class UrlBuilder {
     }
     const anchorParts = [reflection.name];
     if (reflection.typeParameters?.length) {
-      anchorParts.push(
-        reflection.typeParameters
-          .map((typeParameter) => typeParameter.name)
-          .join('-'),
-      );
+      //   anchorParts.push(
+      //     reflection.typeParameters
+      //       .map((typeParameter) => typeParameter.name)
+      //       .join('-'),
+      //   );
     }
     return anchorParts.join('');
   }

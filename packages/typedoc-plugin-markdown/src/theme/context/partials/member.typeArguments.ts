@@ -14,5 +14,5 @@ export function typeArguments(
           })
         : this.partials.someType(typeArgument),
     )
-    .join(', ')}${this.helpers.getAngleBracket('>')}`;
+    .join(',')}${this.helpers.getAngleBracket('>')}`;
 }

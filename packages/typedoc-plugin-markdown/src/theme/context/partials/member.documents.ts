@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 import { heading } from 'libs/markdown';
 import { MarkdownThemeContext } from 'theme';
 import {
@@ -12,6 +14,7 @@ export function documents(
   model: ProjectReflection | DeclarationReflection | ContainerReflection,
   options: { headingLevel: number },
 ): string {
+  return 'documents';
   const md: string[] = [];
   const docGroups = model.groups?.filter(
     (group) => group.owningReflection instanceof DocumentReflection,

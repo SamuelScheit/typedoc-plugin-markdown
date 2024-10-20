@@ -35,20 +35,12 @@ export function signatureTitle(
     md.push(bold(escapeChars(model.name)));
   }
 
-  if (model.typeParameters) {
-    md.push(
-      `${this.helpers.getAngleBracket('<')}${model.typeParameters
-        .map((typeParameter) => backTicks(typeParameter.name))
-        .join(', ')}${this.helpers.getAngleBracket('>')}`,
-    );
-  }
-
   md.push(this.partials.signatureParameters(model.parameters || []));
 
   if (model.type) {
-    md.push(`: ${this.partials.someType(model.type)}`);
+    md.push(`: ${backTicks(this.partials.someType(model.type))}`);
   }
 
   const result = md.join('');
-  return useCodeBlocks ? codeBlock(result) : `> ${result}`;
+  return useCodeBlocks ? codeBlock(result) : result;
 }

@@ -1,4 +1,3 @@
-import { backTicks } from 'libs/markdown';
 import { MarkdownThemeContext } from 'theme';
 import {
   ArrayType,
@@ -80,8 +79,8 @@ export function someType(this: MarkdownThemeContext, model?: SomeType): string {
   }
 
   if (model.toString() == 'null') {
-    return backTicks('null');
+    return 'null';
   }
 
-  return backTicks(model?.toString());
+  return model?.toString();
 }

@@ -21,7 +21,12 @@ export function memberContainer(
     !model.hasOwnDocument &&
     ![ReflectionKind.Constructor].includes(model.kind)
   ) {
-    md.push(heading(options.headingLevel, this.partials.memberTitle(model)));
+    md.push(
+      heading(
+        options.headingLevel,
+        this.partials.memberTitle(model, options.nested),
+      ),
+    );
   }
 
   md.push(

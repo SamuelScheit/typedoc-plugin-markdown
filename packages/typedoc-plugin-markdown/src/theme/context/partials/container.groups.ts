@@ -68,7 +68,7 @@ export function groups(
         if (group.children) {
           md.push(
             this.partials.members(group.children as DeclarationReflection[], {
-              headingLevel: options.headingLevel + 1,
+              headingLevel: options.headingLevel,
             }),
           );
         }

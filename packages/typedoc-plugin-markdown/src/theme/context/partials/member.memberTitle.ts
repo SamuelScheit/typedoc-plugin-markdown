@@ -2,11 +2,13 @@ import { backTicks, strikeThrough } from '@plugin/libs/markdown';
 import { escapeChars } from '@plugin/libs/utils';
 import { encodeAngleBrackets } from '@plugin/libs/utils/encode-angle-brackets';
 import { MarkdownThemeContext } from '@plugin/theme';
-import { DeclarationReflection, ReflectionKind, ReflectionType } from 'typedoc';
+import { DeclarationReflection, ReflectionKind } from 'typedoc';
+import { someType } from './type.some';
 
 export function memberTitle(
   this: MarkdownThemeContext,
   model: DeclarationReflection,
+  includeType = false,
 ): string {
   const md: string[] = [];
   const name: string[] = [];
@@ -19,23 +21,15 @@ export function memberTitle(
     ? encodeAngleBrackets(model.name)
     : model.name;
 
-  name.push(
-    `${/\\/.test(model.name) ? backTicks(model.name) : escapeChars(modelName)}`,
-  );
-
-  if (
-    model.signatures?.length ||
-    (model.type as ReflectionType)?.declaration?.signatures?.length
-  ) {
-    name.push('()');
-  }
-
-  if (model.typeParameters?.length) {
-    const typeParameters = model.typeParameters
-      .map((typeParameter) => typeParameter.name)
-      .join(', ');
+  if (model.signatures?.length) {
     name.push(
-      `${`${this.helpers.getAngleBracket('<')}${typeParameters}${this.helpers.getAngleBracket('>')}`}`,
+      this.partials.signatureTitle(model.signatures[0], {
+        includeType: true,
+      }),
+    );
+  } else {
+    name.push(
+      `${/\\/.test(model.name) ? backTicks(model.name) : escapeChars(modelName)}`,
     );
   }
 
@@ -47,6 +41,12 @@ export function memberTitle(
     md.push(strikeThrough(name.join('')));
   } else {
     md.push(name.join(''));
+  }
+
+  const type =
+    model.type && includeType ? backTicks(someType.call(this, model.type)) : '';
+  if (type) {
+    md.push(type);
   }
 
   return md.join(': ');

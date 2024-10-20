@@ -1,6 +1,7 @@
-import { heading } from 'libs/markdown';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 import { MarkdownThemeContext } from 'theme';
-import { ReflectionKind, SignatureReflection } from 'typedoc';
+import { SignatureReflection } from 'typedoc';
 
 export function signature(
   this: MarkdownThemeContext,
@@ -13,14 +14,6 @@ export function signature(
   },
 ): string {
   const md: string[] = [];
-
-  if (!options.nested) {
-    md.push(
-      this.partials.signatureTitle(model, {
-        accessor: options.accessor,
-      }),
-    );
-  }
 
   let modelComments = model.comment || model.parent?.comment;
 
@@ -53,47 +46,6 @@ export function signature(
   if (!options.multipleSignatures && model.parent?.documents) {
     md.push(
       this.partials.documents(model?.parent, {
-        headingLevel: options.headingLevel,
-      }),
-    );
-  }
-
-  if (
-    model.typeParameters?.length &&
-    model.kind !== ReflectionKind.ConstructorSignature
-  ) {
-    md.push(
-      heading(
-        options.headingLevel,
-        this.internationalization.kindPluralString(
-          ReflectionKind.TypeParameter,
-        ),
-      ),
-    );
-    if (this.helpers.useTableFormat('parameters')) {
-      md.push(this.partials.typeParametersTable(model.typeParameters));
-    } else {
-      md.push(this.partials.typeParametersList(model.typeParameters));
-    }
-  }
-
-  if (model.parameters?.length) {
-    md.push(
-      heading(
-        options.headingLevel,
-        this.internationalization.kindPluralString(ReflectionKind.Parameter),
-      ),
-    );
-    if (this.helpers.useTableFormat('parameters')) {
-      md.push(this.partials.parametersTable(model.parameters));
-    } else {
-      md.push(this.partials.parametersList(model.parameters));
-    }
-  }
-
-  if (model.type) {
-    md.push(
-      this.partials.signatureReturns(model, {
         headingLevel: options.headingLevel,
       }),
     );

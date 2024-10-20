@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 import { heading } from 'libs/markdown';
 import { MarkdownThemeContext } from 'theme';
 import { DeclarationReflection, ReflectionKind } from 'typedoc';
