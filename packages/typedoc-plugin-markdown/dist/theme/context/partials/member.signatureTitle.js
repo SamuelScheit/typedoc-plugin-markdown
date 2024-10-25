@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.signatureTitle = signatureTitle;
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 const markdown_1 = require("../../../libs/markdown");
 const utils_1 = require("../../../libs/utils");
 function signatureTitle(model, options) {
@@ -24,7 +25,14 @@ function signatureTitle(model, options) {
     }
     md.push(this.partials.signatureParameters(model.parameters || []));
     if (model.type) {
-        md.push(`: ${(0, markdown_1.backTicks)(this.partials.someType(model.type))}`);
+        // @ts-ignore
+        if (model.type._target.qualifiedName === 'JSX.Element') {
+            md.splice(0, md.length);
+            md.push(`\\<${(0, markdown_1.bold)(model.name)} \\/>`);
+        }
+        else {
+            md.push(`: ${(0, markdown_1.backTicks)(this.partials.someType(model.type))}`);
+        }
     }
     const result = md.join('');
     return useCodeBlocks ? (0, markdown_1.codeBlock)(result) : result;

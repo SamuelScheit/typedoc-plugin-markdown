@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { backTicks, bold, codeBlock } from '@plugin/libs/markdown';
 import { escapeChars } from '@plugin/libs/utils';
 import { MarkdownThemeContext } from '@plugin/theme';
@@ -38,7 +39,13 @@ export function signatureTitle(
   md.push(this.partials.signatureParameters(model.parameters || []));
 
   if (model.type) {
-    md.push(`: ${backTicks(this.partials.someType(model.type))}`);
+    // @ts-ignore
+    if (model.type._target.qualifiedName === 'JSX.Element') {
+      md.splice(0, md.length);
+      md.push(`\\<${bold(model.name)} \\/>`);
+    } else {
+      md.push(`: ${backTicks(this.partials.someType(model.type))}`);
+    }
   }
 
   const result = md.join('');

@@ -1,4 +1,3 @@
-import { heading } from 'libs/markdown';
 import { MarkdownThemeContext } from 'theme';
 import {
   DeclarationReflection,
@@ -19,13 +18,13 @@ export function categories(
         (child) => child.kind !== ReflectionKind.Constructor,
       );
       if (categoryChildren.length) {
-        md.push(heading(options.headingLevel, category.title));
+        md.push(category.title);
         if (category.description) {
           md.push(this.helpers.getCommentParts(category.description));
         }
         md.push(
           this.partials.members(categoryChildren as DeclarationReflection[], {
-            headingLevel: options.headingLevel + 1,
+            headingLevel: options.headingLevel,
           }),
         );
       }

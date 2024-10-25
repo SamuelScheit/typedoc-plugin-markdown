@@ -6,7 +6,6 @@ import {
   resourceTemplates,
 } from '@plugin/theme/context/resources';
 import { MarkdownRenderer, PackageMetaData } from '@plugin/types';
-import * as path from 'path';
 import { Internationalization, Options, Reflection } from 'typedoc';
 
 /**
@@ -144,16 +143,18 @@ export class MarkdownThemeContext {
         );
       }
 
-      const baseUrl = path.relative(
-        path.dirname(this.page?.url || '.'),
-        path.dirname(url),
-      );
+      //   const baseUrl = path.relative(
+      //     path.dirname(this.page?.url || '.'),
+      //     path.dirname(url),
+      //   );
 
-      const relativeUrl = path
-        .join(baseUrl, path.basename(url))
-        .replace(/\\/g, '/');
+      //   const relativeUrl = path
+      //     .join(baseUrl, path.basename(url))
+      //     .replace(/\\/g, '/');
 
-      return encodeURI(relativeUrl);
+      //   console.log('getRelativeUrl', url, publicPath, baseUrl, relativeUrl);
+
+      return encodeURI(url);
     }
   }
 
