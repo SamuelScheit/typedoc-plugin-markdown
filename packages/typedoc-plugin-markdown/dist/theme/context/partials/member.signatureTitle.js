@@ -26,7 +26,7 @@ function signatureTitle(model, options) {
     md.push(this.partials.signatureParameters(model.parameters || []));
     if (model.type) {
         // @ts-ignore
-        if (model.type._target.qualifiedName === 'JSX.Element') {
+        if (model.type?._target?.qualifiedName === 'JSX.Element') {
             md.splice(0, md.length);
             md.push(`\\<${(0, markdown_1.bold)(model.name)} \\/>`);
         }
