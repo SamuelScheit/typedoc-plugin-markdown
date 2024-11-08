@@ -40,7 +40,7 @@ export function signatureTitle(
 
   if (model.type) {
     // @ts-ignore
-    if (model.type._target.qualifiedName === 'JSX.Element') {
+    if (model.type?._target?.qualifiedName === 'JSX.Element') {
       md.splice(0, md.length);
       md.push(`\\<${bold(model.name)} \\/>`);
     } else {
